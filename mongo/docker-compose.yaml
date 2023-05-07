@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    command: --config /etc/mongo/mongod.conf
+    ports:
+      - 27017:27017
+    volumes:
+      # 挂载数据目录
+      - /apps/mongo/db:/data/db
+      # 挂载日志目录
+      - /apps/mongo/log:/var/log/mongodb
+      # 挂载配置目录
+      - /apps/mongo/config:/etc/mongo
+    expose:
+      - 27017
+    networks:
+      - db
+
+networks:
+  db:
+    external: true

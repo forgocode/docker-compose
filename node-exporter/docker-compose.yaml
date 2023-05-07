@@ -1,0 +1,18 @@
+version: "3"
+services:
+  nodeexporter:
+    image: "prom/node-exporter:latest"
+    container_name: node-exporter
+    expose:
+      - 9100
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys/:/host/sys:ro
+      - /:/rootfs:ro
+    restart: always
+    network_mode: "host"
+    command:
+      - '--path.procfs=host/proc'
+      - '--path.sysfs=host/sys'
+      - '--path.rootfs=/rootfs'

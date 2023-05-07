@@ -1,0 +1,22 @@
+version: '3' 
+
+services:
+  grafana:
+    restart: always
+    image: grafana/grafana:latest
+    container_name: grafana
+    expose:
+      - 3000
+    volumes:
+      - /home/rguo/apps/grafana/data:/var/lib/grafana
+      - /home/rguo/apps/grafana/config/grafana.ini:/etc/grafana/grafana.ini
+    networks:
+      - workload
+      - grafana
+       
+networks:
+  workload:
+    external: true
+  grafana:
+    external: true
+   

@@ -1,0 +1,20 @@
+version: '3' 
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - /home/rguo/apps/nginx/conf.d:/etc/nginx/conf.d
+      - /home/rguo/apps/nginx/log:/var/log/nginx
+    networks:
+      - workload
+       
+networks:
+  workload:
+    external: true
+   

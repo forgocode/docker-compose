@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mysql:
+    restart: always
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - /home/rguo/apps/mysql/mydir:/mydir
+      - /home/rguo/apps/mysql/datadir:/var/lib/mysql
+      - /home/rguo/apps/mysql/conf/my.cnf:/etc/my.cnf
+      # 数据库还原目录，做数据迁移时使用
+      - /home/rguo/apps/mysql/source:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456"
+      - "MYSQL_DATABASE=test"
+      - "TZ=Asiz/Shanghai"
+    expose:
+      - 3306
+    networks:
+      - db
+networks:
+  db:
+    external: true

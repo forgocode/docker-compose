@@ -1,0 +1,28 @@
+version: '3'
+services:
+  etcd:
+    restart: always
+    image: quay.io/coreos/etcd:latest
+    container_name: etcd
+    volumes:
+      - /apps/etcd/data:/etcd-data
+        # - /etc/localtime:etc/localtime
+    environment:
+      - "ETCDCTL_API= 3"
+      - "ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379"
+      - "ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
+      - "ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
+      - "ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380"
+      - "ALLOW_NONE_AUTHENTICATION=yes"
+      - "ETCD_INITIAL_CLUSTER=etcd.test.com=http://0.0.0.0:2380"
+      - "ETCD_NAME=etcd.test.com"
+    ports:
+      # 宿主机：容器
+      - 2379:2379
+    expose:
+      - 2379
+    networks:
+      - db
+networks:
+  db:
+    external: true

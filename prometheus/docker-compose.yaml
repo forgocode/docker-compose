@@ -1,0 +1,19 @@
+version: "3"
+services:
+  prometheus:
+    image: bitnami/prometheus:latest
+    restart: always
+    container_name: prometheus
+    expose:
+      - 9090
+    volumes:
+      - /home/rguo/apps/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /home/rguo/apps/prometheus/data:/prometheus
+    networks:
+      - grafana
+
+networks:
+  grafana:
+    external: true
+          
+
